@@ -1,0 +1,22 @@
+{
+  "name": "AKC101",
+  "version": "1.0.0",
+  "description": "IoT Button & Light",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Inho Oh",
+    "email": "webispy@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "onoff": "^1.1.1",
+    "request": "^2.79.0",
+    "websocket": "^1.0.24"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webispy/akc101.git"
+  }
+}

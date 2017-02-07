@@ -22,6 +22,7 @@
 > _빈번히 바뀌는 아이디어에 대한 프로토타이핑에 최적. 스핀오프 후 제품 상용화에 현실적인 대안_
 
 ---
+
 ## 실습 환경 설정
 
 * ARTIK 710 보드
@@ -29,7 +30,13 @@
 * 노트북: 리눅스 or 윈도우(PuTTY SSH, Serial)
 * WiFi (외부망 접속 가능): artik.cloud / heroku
 * 사전지식: Git, Node.js, GPIO
-
+* 샘플 코드 받기
+```bash
+dnf install git npm
+git clone https://github.com/webispy/akc101.git
+cd akc101
+npm install
+```
 ---
 ## 실습 목표
 
@@ -64,10 +71,10 @@ IoT Button & LED Light 만들기 (Amazon Dash / Hue bulb)
    * 원격으로 제어되는 LED Light (ARTIK 710 보드 내장 LED400)
    * 만능 버튼 (ARTIK 710 보드 내장 SW403)
  * Device Type 등록
-   * Manifest for 'LED Light'
+   * Manifest for 'GEEK Light'
      * fields: state (string: 'on', 'off')
      * actions: setOn, setOff
-   * Manifest for 'GOD Button'
+   * Manifest for 'GEEK Button'
      * fields: state (string: 'pressed', 'released')
      * actions: none
  * Device 생성하기
@@ -76,15 +83,17 @@ IoT Button & LED Light 만들기 (Amazon Dash / Hue bulb)
 ---
 ### 클라우드에 Message 보내기 (Sample-Code/01)
  * 만능 버튼 누르면 ARTIK Cloud에 메시지 보내기
- * curl로 보내기 테스트 (GOD Button)
-```
+ * [ARTIK Cloud API reference](https://developer.artik.cloud/documentation/api-reference/rest-api.html#post-a-message-or-action)
+ * JSON 설명 (JavaScript Object Notation)
+ * curl로 보내기 테스트 (GEEK Button)
+```bash
 curl -X POST -H "Content-Type:application/json" \
   -H "Authorization:Bearer 8b38d4d3326b4a74803909f560b150d8" \
   "https://api.artik.cloud/v1.1/messages" \
   -d '{ "sdid": "842f9c4bafc84c8f9bd79f95684aa23f", "type": "message", "data": "{ \"state\": \"pressed\"}" }'
 ```
  * GPIO 처리
-   * https://developer.artik.io/documentation/developer-guide/gpio/gpio-mapping.html#artik-710-headers
+   * [ARTIK 710 Headers document]( https://developer.artik.io/documentation/developer-guide/gpio/gpio-mapping.html#artik-710-headers)
    * SW404 == sysfs 30
  * Node.js로 구현하기
    * request(HTTP/HTTPS), onoff(GPIO) module 사용
@@ -92,23 +101,29 @@ curl -X POST -H "Content-Type:application/json" \
 ---
 ### 룰 작성해보기
  * 만능 버튼 눌렀다 떼면(state == 'released') Email 보내기
- * 만능 버튼 눌렀다 떼고(state == 'released') Light의 state가 off 이면, Light에 setOn Action 보내기
- * 만능 버튼 눌렀다 떼고(state == 'released') Light의 state가 on 이면, Light에 setOff Action 보내기
 
 ---
 ### Action 받아보기 (Sample-Code/02)
- * curl로 최근 Action 가져오기 (LED Light, 24시간 사이의 최신 메시지)
-```
+ * GEEK Light에 Action을 보내면 불 켜기/끄기
+ * curl로 최근 Action 가져오기 (24시간 사이의 최신 메시지)
+```bash
 curl -X GET -H "Content-Type:application/json" \
    -H "Authorization:Bearer bf946bc4366d4ef98ed18d089673cbe5" \
    "https://api.artik.cloud/v1.1/actions?count=1&endDate=$(($(date +"%s")*1000))&startDate=$(($(date +"%s")*1000-24*3600*1000))&order=desc&ddid=b809f9e73ebb4a5ab022233253398199"
 ```
  * 실시간으로 Action 받기 (Websockets)
    * Node.js websocket module 사용
+   * Action 보내기: 임시로 룰 하나 추가(Light에 setOn Action 보내기)해서 Test로 수행
  * GPIO 처리
    * LED400(Red) == sysfs 28
  * Node.js로 구현하기
    * Websockets + GPIO
+   * 'on' / 'off' 인자 받아서 불 켜고/끄고 상태를 ARTIK Cloud로 보내기
+
+---
+### 룰 업데이트 하기
+* 만능 버튼 눌렀다 떼고(state == 'released') Light의 state가 off 이면, Light에 setOn Action 보내기
+* 만능 버튼 눌렀다 떼고(state == 'released') Light의 state가 on 이면, Light에 setOff Action 보내기
 
 ---
 ## 2부
@@ -118,15 +133,19 @@ curl -X GET -H "Content-Type:application/json" \
 
 ---
 ### 디바이스 공유해보기
- * 컨셉: 가족끼리 디바이스 공유
- * 옆 사람의 LED Light를 공유해보기
- * 버튼을 눌러서 옆 사람의 LED를 제어해보기
+ * 컨셉: 가족끼리 디바이스 공유, 사무실 공용기기를 직원들간에 공유
+ * 옆 사람의 GEEK Light를 공유해보기
+   * Device type: Private -> Public 으로 변경
+   * Devices에서 GEEK Light 아래에 있는 Share Device 선택하고 옆 사람 Email로 초청 보내기
+   * 초청 메일 받으면 수락
+ * 버튼을 눌러서 옆 사람의 Light를 제어해보기
+   * 룰 변경하기 (GEEK Light를 공유받은 GEEK Light로 변경)
 
 ---
 ### 외부 서비스와 연동해보기 (IFTTT, LINE Messenger)
  * 불이 켜지면 IFTTT로 다른 동작 수행시키기
    * IFTTT My Applets에 등록: if light is on, then send a notification
-   * LED Light 디바이스에 state='on' 메시지가 오면, notification을 보냄
+   * GEEK Light 디바이스에 state='on' 메시지가 오면, notification을 보냄
  * 보드의 불이 켜지면 내 라인 메신저로 이벤트 받기 (Sample-Code/03)
    * LINE Notify OAuth2 (https://notify-bot.line.me/)
    * Cloud Connector 제작
