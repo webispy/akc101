@@ -13,7 +13,14 @@
   "dependencies": {
     "onoff": "^1.1.1",
     "request": "^2.79.0",
-    "websocket": "^1.0.24"
+    "websocket": "^1.0.24",
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.4.1",
+    "express": "~4.13.4",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
   },
   "repository": {
     "type": "git",
