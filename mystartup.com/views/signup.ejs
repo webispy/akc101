@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><a href="/"><%= title %></a></h1>    
+    <hr/>
+    <p>
+<% if (user) { %>
+    인증 되었습니다.
+    <form action="/signup" method="post">
+    <table>
+    <tr>
+      <th>ID</th>
+      <td><input type=text value="<%= user.email %>" disabled/></td>
+    </tr>
+    <tr>
+      <th>Password</th>
+      <td><input type="password"/></td>
+    </tr>
+    <tr>
+      <th colspan=2><input type="submit"/></th>
+    </tr>
+    </table>
+    </form>
+<% } else { %>
+    <a href="/akc/login">ARTIK Cloud 인증하기</a>
+<% } %>
+    </p>
+  </body>
+</html>

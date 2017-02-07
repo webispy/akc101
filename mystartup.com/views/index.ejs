@@ -5,7 +5,14 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1><a href="/"><%= title %></a></h1>
+    <hr/>
+    <p>
+<% if (user) { %>
+    <a href="/user/logout">로그아웃</a>
+<% } else { %>
+    <a href="/user/login">로그인</a> | <a href="/signup">회원가입</a>
+<% } %>
+    </p>    
   </body>
 </html>
