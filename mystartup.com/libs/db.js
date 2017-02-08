@@ -24,6 +24,7 @@ function Controller (schema) {
 
   this.schema = schema
   this.all = db.objects(this.schema)
+/*
   this.all.addListener((items, changes) => {
     console.log('all changes:', changes)
     console.log(changes.insertions)
@@ -31,6 +32,7 @@ function Controller (schema) {
     console.log(changes.deletions)
     this.emit('changed', items, changes)
   })
+*/
 }
 
 util.inherits(Controller, EventEmitter)

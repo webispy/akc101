@@ -97,6 +97,8 @@ router.post('/signup', function (req, res, next) {
     akcuser: req.session.akcuser,
     error: ret.error
   })
+
+  console.log('done')
 })
 
 console.log(db.user.findAll())
