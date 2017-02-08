@@ -93,7 +93,7 @@ router.post('/signup', function (req, res, next) {
   res.render('signup', {
     title: 'My Startup.com',
     step: 3,
-    user: req.sessoin.user,
+    user: req.session.user,
     akcuser: req.session.akcuser,
     error: ret.error
   })
