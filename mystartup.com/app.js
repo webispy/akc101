@@ -35,9 +35,11 @@ app.use('/users', require('./routes/users'))
 app.use('/akc', require('./routes/akc'))
 
 passport.serializeUser(function (user, cb) {
+  console.log('serialize')
   cb(null, user)
 })
 passport.deserializeUser(function (obj, cb) {
+  console.log('deserialize')
   cb(null, obj)
 })
 
@@ -71,6 +73,5 @@ app.use(function (err, req, res, next) {
     error: {}
   })
 })
-
 
 module.exports = app

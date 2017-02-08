@@ -1,0 +1,45 @@
+<%- include header.ejs %>
+<div class="container">
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Login</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" id="formSignup" role="form"
+      action="/users/login"
+      data-toggle="validator"
+      method="post">
+      <div class="form-group">
+        <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+        <div class="col-lg-10">
+          <input type="email" class="form-control"
+            id="inputEmail" name="email" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPwd" class="col-lg-2 control-label">Password</label>
+        <div class="col-lg-10">
+          <input type="password" class="form-control" 
+            id="inputPwd" name="pwd"
+            data-minlength="4" required/>
+          <div class="help-block">Minumum of 4 characters</div>
+        </div>
+      </div>
+<% if (error) { %>
+  <div class="alert alert-dismissible alert-danger col-lg-offset-2">
+    <strong>Error!!</strong>
+    <%= error %>
+  </div>
+<% } %>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="submit" id="submitForm" class="btn btn-primary">LOGIN</button>
+        </div>
+      </div>  
+    </form>
+  </div>
+</div>
+
+</div>
+<%- include footer.ejs %>

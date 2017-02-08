@@ -13,9 +13,6 @@ const strategy = new ARTIKCloudStrategy({
 },
   (accessToken, refreshToken, params, profile, done) => {
     profile.refreshToken = refreshToken
-    // console.log('profile = ', profile)
-    // settings.data.akc.usertoken = accessToken
-    // settings.data.akc.userid = profile.id
     return done(null, profile)
   }
 )
@@ -23,11 +20,17 @@ const strategy = new ARTIKCloudStrategy({
 passport.use(strategy)
 
 router.get('/login', passport.authenticate('artikcloud'))
+router.get('/callback', function (req, res, next) {
+  passport.authenticate('artikcloud',
+    function (err, user, info) {
+      if (err) {
+        return res.json(401, err)
+      }
 
-router.get('/callback', passport.authenticate('artikcloud'),
-  (req, res) => {
-    console.log('req.user:', req.user)
-    res.redirect('/signup')
-  })
+      req.session.akcuser = user
+
+      res.redirect('/users/signup')
+    })(req, res, next)
+})
 
 module.exports = router

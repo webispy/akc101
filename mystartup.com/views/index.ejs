@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><a href="/"><%= title %></a></h1>
-    <hr/>
-    <p>
-<% if (user) { %>
-    <a href="/user/logout">로그아웃</a>
-<% } else { %>
-    <a href="/user/login">로그인</a> | <a href="/signup">회원가입</a>
-<% } %>
-    </p>    
-  </body>
-</html>
+<%- include header.ejs %>
+<div class="container">
+
+    <h2>hi</h2>    
+
+</div>
+<%- include footer.ejs %>

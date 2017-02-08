@@ -158,6 +158,7 @@ curl -X GET -H "Content-Type:application/json" \
 ---
 ### 직접 구축한 서비스/웹사이트에서 사용자의 아틱 클라우드 디바이스/데이터 연동하기 (Sample-Code/04)
  * mystartup.com 사이트에서 아틱 클라우드의 데이터 연동하기
+ * https://webispy-startup.herokuapp.com/
  * 회원가입, ARTIK Cloud OAuth2 인증, User token
  * mystartup.com에 가입된 전체 사용자들의 디바이스 목록 보여주기 (관리자 모드 시뮬레이션)
  * Heroku에 Deploy해서 실제로 동작 확인하기

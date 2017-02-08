@@ -1,33 +1,120 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><a href="/"><%= title %></a></h1>    
-    <hr/>
-    <p>
-<% if (user) { %>
-    인증 되었습니다.
-    <form action="/signup" method="post">
-    <table>
-    <tr>
-      <th>ID</th>
-      <td><input type=text value="<%= user.email %>" disabled/></td>
-    </tr>
-    <tr>
-      <th>Password</th>
-      <td><input type="password"/></td>
-    </tr>
-    <tr>
-      <th colspan=2><input type="submit"/></th>
-    </tr>
-    </table>
-    </form>
+<%- include header.ejs %>
+<div class="container">
+
+<div class="jumbotron">
+  <h1>Sign Up</h1>
+  <p>My Startup은 ARTIK Cloud에 등록된 사용자의 디바이스를 사용합니다.</p>
+  <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+</div>
+
+<% if (step == 1) { %>
+
+<div class="rows">
+  <div style="width:33%;" class="text-center">
+    1/3 ARTIK Cloud 인증
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: 33%;"></div>
+  </div>
+
+  <div class="text-center">
+  <a class="btn btn-primary" href="/akc/login">ARTIK Cloud 인증하기</a>
+  </div>
+</div>
+
+<% } else if (step == 2) { %>
+
+<div class="rows">
+  <div style="width:66%;" class="text-center">
+    2/3 개인 정보 입력
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: 66%;"></div>
+  </div>
+
+  <form class="form-horizontal" id="formSignup" role="form"
+    action="/users/signup"
+    data-toggle="validator"
+    method="post">
+  <div class="form-group">
+    <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control"
+        id="inputEmail" name="email"
+        value="<%= akcuser.email %>" readonly/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPwd1" class="col-lg-2 control-label">Choose Password</label>
+    <div class="col-lg-10">
+      <input type="password" class="form-control" 
+        id="inputPwd1" name="pwd"
+        data-minlength="4" required/>
+      <div class="help-block">Minumum of 4 characters</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPwd2" class="col-lg-2 control-label">Confirm Password</label>
+    <div class="col-lg-10">
+      <input type="password" class="form-control" 
+        data-match="#inputPwd1"
+        data-match-error="Whoops, these don't match"
+        id="inputPwd2" required/>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <button type="submit" id="submitForm" class="btn btn-primary">REGISTER NOW!</button>
+    </div>
+  </div>  
+  </form>
+
+</div>
+
+<% } else if (step == 3) { %>
+
+<div class="rows">
+<% if (error) { %>
+  <div style="width:100%;" class="text-center">
+    3/3 회원 가입 실패 !!
+  </div>
+  <div class="progress">
+    <div class="progress-bar progress-bar-danger" style="width: 100%;"></div>
+  </div>
+
+  <br/>
+
+  <div class="alert alert-dismissible alert-danger">
+    <strong>Error!!</strong>
+    <%= error %>
+  </div>
+
+  <div class="text-center">
+    <a class="btn btn-primary" href="/">홈으로 가기</a>
+  </div>
+
 <% } else { %>
-    <a href="/akc/login">ARTIK Cloud 인증하기</a>
+  <div style="width:100%;" class="text-center">
+    3/3 회원 가입 완료 !!
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: 100%;"></div>
+  </div>
+
+  <br/>
+  <div class="text-center">
+    <h3><%= akcuser.email %>님 회원 가입을 축하드립니다!</h3>
+    <a class="btn btn-primary" href="/users/login">Login 하러 가기</a>
+  </div>
+
 <% } %>
-    </p>
-  </body>
-</html>
+
+</div>
+
+<% } %>
+
+</div>
+<%- include footer.ejs %>
+<script>
+$('#formSignup').validator()
+</script>
