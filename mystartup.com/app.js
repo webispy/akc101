@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
 app.use('/akc', require('./routes/akc'))
+app.use('/mylights', require('./routes/mylights'))
 
 passport.serializeUser(function (user, cb) {
   console.log('serialize')

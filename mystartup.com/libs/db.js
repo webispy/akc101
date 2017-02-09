@@ -1,3 +1,5 @@
+'use strict'
+
 const Realm = require('realm')
 const util = require('util')
 const EventEmitter = require('events')
@@ -10,7 +12,8 @@ const UserSchema = {
     accessToken: 'string',
     refreshToken: 'string',
     pwd: 'string',
-    timestamp: 'date'
+    timestamp: 'date',
+    tokenExpires: 'date'
   }
 }
 

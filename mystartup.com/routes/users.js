@@ -12,7 +12,8 @@ router.get('/login', function (req, res, next) {
   res.render('login', {
     title: 'My Startup.com',
     user: null,
-    error: null
+    error: null,
+    active: '/login'
   })
 })
 
@@ -26,14 +27,16 @@ router.post('/login', function (req, res, next) {
     res.render('login', {
       title: 'My Startup.com',
       user: null,
-      error: 'Can\'t find email'
+      error: 'Can\'t find email',
+      active: '/login'
     })
   } else {
     if (ret.pwd !== req.body.pwd) {
       res.render('login', {
         title: 'My Startup.com',
         user: null,
-        error: 'Password mismatch'
+        error: 'Password mismatch',
+        active: '/login'
       })
     } else {
       req.session.user = {
@@ -42,7 +45,7 @@ router.post('/login', function (req, res, next) {
         refreshToken: ret.refreshToken
       }
       console.log('done:', req.session.user)
-      res.redirect('/')
+      res.redirect('/mylights')
     }
   }
 })
@@ -71,17 +74,21 @@ router.get('/signup', function (req, res, next) {
     step: step,
     user: req.session.user,
     akcuser: req.session.akcuser,
-    error: error
+    error: error,
+    active: '/signup'
   })
 })
 
 router.post('/signup', function (req, res, next) {
+  const curDate = new Date()
+
   let ret = db.user.add({
     email: req.body.email,
     pwd: req.body.pwd,
     accessToken: req.session.akcuser.accessToken,
     refreshToken: req.session.akcuser.refreshToken,
-    timestamp: new Date()
+    timestamp: new Date(),
+    tokenExpires: new Date(curDate.getTime() + req.session.akcuser.expires_in * 1000)
   })
 
   if (ret.error) {
@@ -95,7 +102,8 @@ router.post('/signup', function (req, res, next) {
     step: 3,
     user: req.session.user,
     akcuser: req.session.akcuser,
-    error: ret.error
+    error: ret.error,
+    active: '/signup'
   })
 
   console.log('done')

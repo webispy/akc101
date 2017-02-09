@@ -13,6 +13,7 @@ const strategy = new ARTIKCloudStrategy({
 },
   (accessToken, refreshToken, params, profile, done) => {
     profile.refreshToken = refreshToken
+    profile.expires_in = params.expires_in
     return done(null, profile)
   }
 )
