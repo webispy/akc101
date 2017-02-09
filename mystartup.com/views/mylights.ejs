@@ -15,7 +15,12 @@
 <% if (devices[i-1].dtid == config.dtid) { %>
     <tr>
       <td class="col-lg-6"><%= devices[i-1].name %></td>
-      <td class="col-lg-3 text-center"></td>
+      <td class="col-lg-3 text-center">
+        <span id="msg_<%= devices[i-1].id %>"></span>
+        <button did="<%= devices[i-1].id %>"
+          data-loading-text="<i class='fa fa-spinner fa-spin '></i>"
+          class="pull-right btn btn-default getLast"><span class='glyphicon glyphicon-repeat'></span></button>
+      </td>
       <td class="col-lg-3 text-center">
         <button did="<%= devices[i-1].id %>" action="setOn"
           data-loading-text="<i class='fa fa-spinner fa-spin '></i>"
@@ -45,6 +50,30 @@ $('.doAction').on('click', function (e) {
   }).done(function (data) {
     btn.button('reset')
     console.log('done:', data)
+  }).fail(function (data) {
+    btn.button('reset')
+    console.log('fail:', data)
+  })
+})
+
+$('.getLast').on('click', function (e) {
+  var btn = $(this)
+  var did = btn.attr('did')
+
+  btn.button('loading')
+
+  $.ajax({
+    url: '/mylights/' + did + '/lastMessage',
+    method: 'GET'
+  }).done(function (data) {
+    btn.button('reset')
+    var result = JSON.parse(data).data
+    if (result.length == 0) {
+      msg = "No messages"
+    } else {
+      msg = JSON.stringify(result[0].data)
+    }
+    $('#msg_'+did).text(msg)
   }).fail(function (data) {
     btn.button('reset')
     console.log('fail:', data)

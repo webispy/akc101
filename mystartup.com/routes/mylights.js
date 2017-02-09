@@ -18,6 +18,19 @@ router.post('/:did/:action', function (req, res, next) {
     })
 })
 
+router.get('/:did/lastMessage', function (req, res, next) {
+  console.log(req.params)
+  ad.getLastMessage(req.params.did, req.session.user.accessToken)
+    .then(function (repos) {
+      console.log(repos)
+      res.end(repos)
+    })
+    .catch(function (err) {
+      console.error(err)
+      res.status(500).send(err)
+    })
+})
+
 function renderDevices (req, res) {
   console.log(req.session.devices)
   res.render('mylights', {
