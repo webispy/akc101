@@ -13,7 +13,8 @@ const UserSchema = {
     refreshToken: 'string',
     pwd: 'string',
     timestamp: 'date',
-    tokenExpires: 'date'
+    tokenExpires: 'date',
+    akcuid: 'string'
   }
 }
 

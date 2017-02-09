@@ -3,6 +3,7 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../libs/db.js')
+const config = require('../config.json')
 
 router.get('/', function (req, res, next) {
   res.send('respond with a resource')
@@ -10,7 +11,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/login', function (req, res, next) {
   res.render('login', {
-    title: 'My Startup.com',
+    config: config,
     user: null,
     error: null,
     active: '/login'
@@ -25,7 +26,7 @@ router.post('/login', function (req, res, next) {
 
   if (ret == null) {
     res.render('login', {
-      title: 'My Startup.com',
+      config: config,
       user: null,
       error: 'Can\'t find email',
       active: '/login'
@@ -33,7 +34,7 @@ router.post('/login', function (req, res, next) {
   } else {
     if (ret.pwd !== req.body.pwd) {
       res.render('login', {
-        title: 'My Startup.com',
+        config: config,
         user: null,
         error: 'Password mismatch',
         active: '/login'
@@ -42,7 +43,11 @@ router.post('/login', function (req, res, next) {
       req.session.user = {
         email: ret.email,
         accessToken: ret.accessToken,
-        refreshToken: ret.refreshToken
+        refreshToken: ret.refreshToken,
+        pwd: ret.pwd,
+        timestamp: ret.timestamp,
+        tokenExpires: ret.tokenExpires,
+        akcuid: ret.akcuid
       }
       console.log('done:', req.session.user)
       res.redirect('/mylights')
@@ -70,7 +75,7 @@ router.get('/signup', function (req, res, next) {
   }
 
   res.render('signup', {
-    title: 'My Startup.com',
+    config: config,
     step: step,
     user: req.session.user,
     akcuser: req.session.akcuser,
@@ -88,7 +93,8 @@ router.post('/signup', function (req, res, next) {
     accessToken: req.session.akcuser.accessToken,
     refreshToken: req.session.akcuser.refreshToken,
     timestamp: new Date(),
-    tokenExpires: new Date(curDate.getTime() + req.session.akcuser.expires_in * 1000)
+    tokenExpires: new Date(curDate.getTime() + req.session.akcuser.expires_in * 1000),
+    akcuid: req.session.akcuser.id
   })
 
   if (ret.error) {
@@ -98,7 +104,7 @@ router.post('/signup', function (req, res, next) {
   console.log('save result:', ret)
 
   res.render('signup', {
-    title: 'My Startup.com',
+    config: config,
     step: 3,
     user: req.session.user,
     akcuser: req.session.akcuser,

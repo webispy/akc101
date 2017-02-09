@@ -2,10 +2,11 @@
 
 const express = require('express')
 const router = express.Router()
+const config = require('../config.json')
 
 router.get('/', function (req, res, next) {
   res.render('index', {
-    title: 'My Startup.com',
+    config: config,
     user: req.session.user,
     active: '/'
   })
@@ -13,7 +14,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/shop', function (req, res, next) {
   res.render('shop', {
-    title: 'My Startup.com',
+    config: config,
     user: req.session.user,
     active: '/shop'
   })

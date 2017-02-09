@@ -1,4 +1,53 @@
 <%- include header.ejs %>
 
+<a class="btn btn-default pull-right" href="/mylights/refresh">Refresh</a>
+
+<table class="table table-stripped table-hover">
+  <thead>
+    <tr>
+      <th class="col-lg-6">Name</th>
+      <th class="col-lg-3 text-center">Last Message</th>
+      <th class="col-lg-3 text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+<% for (var i = 1; i <= devices.length; i++) { %> 
+<% if (devices[i-1].dtid == config.dtid) { %>
+    <tr>
+      <td class="col-lg-6"><%= devices[i-1].name %></td>
+      <td class="col-lg-3 text-center"></td>
+      <td class="col-lg-3 text-center">
+        <button did="<%= devices[i-1].id %>" action="setOn"
+          data-loading-text="<i class='fa fa-spinner fa-spin '></i>"
+          class="btn btn-success doAction">On</button>
+        <button did="<%= devices[i-1].id %>" action="setOff"
+          data-loading-text="<i class='fa fa-spinner fa-spin '></i>"
+          class="btn btn-primary doAction">Off</button>
+      </td>
+    </tr>
+<% } %>
+<% } %>
+  </tbody>
+</table>
 
 <%- include footer.ejs %>
+<script>
+$('.doAction').on('click', function (e) {
+  var btn = $(this)
+  var did = btn.attr('did')
+  var action = btn.attr('action')
+
+  btn.button('loading')
+
+  $.ajax({
+    url: '/mylights/' + did + '/' + action,
+    method: 'POST'
+  }).done(function (data) {
+    btn.button('reset')
+    console.log('done:', data)
+  }).fail(function (data) {
+    btn.button('reset')
+    console.log('fail:', data)
+  })
+})
+</script>
