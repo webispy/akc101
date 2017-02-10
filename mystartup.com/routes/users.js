@@ -9,6 +9,41 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource')
 })
 
+router.get('/delete', function (req, res, next) {
+  res.render('delete', {
+    config: config,
+    user: req.session.user,
+    error: null,
+    active: '/delete'
+  })
+})
+
+router.post('/delete', function (req, res, next) {
+  console.log(req.body)
+
+  if (req.body.pwd !== req.session.user.pwd) {
+    res.render('delete', {
+      config: config,
+      user: req.session.user,
+      error: 'Password mismatch',
+      active: '/delete'
+    })
+    return
+  }
+
+  if (db.user.remove(req.session.user.email) === false) {
+    res.render('delete', {
+      config: config,
+      user: req.session.user,
+      error: 'Internal error',
+      active: '/delete'
+    })
+  }
+
+  req.session.user = null
+  res.redirect('/')
+})
+
 router.get('/login', function (req, res, next) {
   res.render('login', {
     config: config,
@@ -56,7 +91,6 @@ router.post('/login', function (req, res, next) {
 })
 
 router.get('/logout', function (req, res, next) {
-  req.logout()
   req.session.user = null
   res.redirect('/')
 })

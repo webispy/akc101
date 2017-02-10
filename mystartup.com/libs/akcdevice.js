@@ -2,7 +2,7 @@
 
 const rp = require('request-promise')
 
-const api = function (method, path, token, jsonbody = undefined) {
+const api = function (method, path, token, jsonbody) {
   return rp({
     method: method,
     headers: {
