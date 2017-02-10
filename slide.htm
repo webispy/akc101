@@ -1,3 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>실전 ARTIK Cloud 활용 !</title>
+		<style>
+			body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2em; }
+.remark-slide-content h3 { font-size: 1.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+li p { line-height: 1.25em; }
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	color: rgb(249, 38, 114);
+	text-decoration: none;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted     { background-color: #373832; }
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+}
+
+img[alt=piedpiper] { height: 100px; float:right !important;}
+img[alt=Dash] { height: 150px; }
+img[alt=Hue] { height: 150px; }
+img[alt=ARTIK7] { width: 100%; }
+
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
 # 실전 ARTIK Cloud 활용 !
 
 IoT 제품 & 서비스 만들기
@@ -201,7 +278,7 @@ node light.js
    * 룰 연동하여 LINE 메신저로 불 상태 이벤트 받기
 
 ---
-### 직접 구축한 서비스/웹사이트에서 사용자의 아틱 클라우드 디바이스/데이터 연동하기
+### 직접 구축한 서비스/웹사이트에서 사용자의 아틱 클라우드 디바이스/데이터 연동하기 (Sample-Code/04)
  * mystartup.com 사이트에서 아틱 클라우드의 데이터 연동하기
  * https://webispy-startup.herokuapp.com/
  * 회원가입, ARTIK Cloud OAuth2 인증, User token
@@ -216,3 +293,12 @@ node light.js
 
 ---
 ## Q&A
+
+		</textarea>
+		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+		<script>
+			var slideshow = remark.create();
+		</script>
+		<script></script>
+	</body>
+</html>
