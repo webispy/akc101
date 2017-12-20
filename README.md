@@ -37,7 +37,7 @@ IoT 제품 & 서비스 만들기
 ---
 ## 실습 목표
 ![piedpiper](https://pbs.twimg.com/profile_images/453002109768589313/dFwynoZy_400x400.png)
-GEEK-RED-LED-Light.com 만들어 보기
+GeekRedLed.com 만들어 보기
 
 * IoT Button - Amazon Dash
 * IoT LED Light (Red color) - Philips Hue
@@ -202,13 +202,10 @@ node light.js
 
 ---
 ### 직접 구축한 서비스/웹사이트에서 사용자의 아틱 클라우드 디바이스/데이터 연동하기
- * mystartup.com 사이트에서 아틱 클라우드의 데이터 연동하기
- * https://webispy-startup.herokuapp.com/
+ * GeekRedLed.com 사이트에서 아틱 클라우드의 데이터 연동하기
+ * http://geekredled.com/  
  * 회원가입, ARTIK Cloud OAuth2 인증, User token
- * mystartup.com에 가입된 전체 사용자들의 디바이스 목록 보여주기 (관리자 모드 시뮬레이션)
- * Heroku에 Deploy해서 실제로 동작 확인하기
-   * Node.js, Passport
-
+ 
 ---
 ### 기타 사용/구현 가능한 시나리오들 설명 (시연은 하지 않음)
  * 예) 아마존 에코에 음성 명령을 내리면 보드의 불이 On/Off
