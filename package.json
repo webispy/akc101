@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "IoT Button & Light",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": {
     "name": "Inho Oh",
@@ -11,22 +13,24 @@
   },
   "license": "MIT",
   "dependencies": {
-    "body-parser": "~1.15.1",
+    "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
+    "debug": "~2.6.9",
     "ejs": "~2.5.5",
-    "express": "~4.13.4",
+    "express": "~4.16.0",
     "express-session": "^1.15.0",
-    "morgan": "~1.7.0",
+    "morgan": "~1.9.1",
     "passport": "^0.3.2",
     "passport-artikcloud": "^1.0.1",
     "realm": "^1.0.2",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.4.5",
+    "snyk": "^1.117.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/webispy/akc101.git"
-  }
+  },
+  "snyk": true
 }
