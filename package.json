@@ -22,7 +22,7 @@
     "morgan": "~1.9.1",
     "passport": "^0.3.2",
     "passport-artikcloud": "^1.0.1",
-    "realm": "^1.0.2",
+    "realm": "^10.1.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "serve-favicon": "~2.4.5",
